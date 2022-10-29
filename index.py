@@ -4,7 +4,7 @@ from flask import request
 from flask import jsonify
 from waitress import serve
 import json
-from controllers.administracionMesasControler import AdministracionMesas
+from controllers.mesasControler import AdministracionMesas
 mi_app = Flask (__name__)
 
 _controler_usuario = AdministracionMesas()

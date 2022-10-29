@@ -1,15 +1,13 @@
-from model.administracionMesaModelo import AdministracionMesa
+from model.mesaModelo import AdministracionMesa
+from repositorios.repositorioMesa import RepositorioMesa
+
 
 class AdministracionMesas():
     def __init__(self):
-        pass
+        self._controlador_mesa = RepositorioMesa()
     
     def mostrar_mesas (self):
-        datos_mesa={
-            "id":"1",
-            "Puesto de votacion":"Colegio Rufino Centro",
-            "Mesa #":"1"
-        }
+        datos_mesa= self._controlador_mesa.consultar_coleccion()
         return datos_mesa
     
     
