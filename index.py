@@ -8,6 +8,8 @@ from controllers.mesasControler import AdministracionMesas
 mi_app = Flask (__name__)
 
 _controler_usuario = AdministracionMesas()
+#**********************administracion Mesas ***************************************
+
 #get
 
 @mi_app.route('/mesas',methods=['GET'])
@@ -51,4 +53,4 @@ if __name__ == '__main__':
     print("Servidor Ejecutandose...")
     serve (mi_app, host=datos_configuracion["servidor"], port=datos_configuracion["puerto"])
     
-    
+#**********************administracion Partidos ***************************************
