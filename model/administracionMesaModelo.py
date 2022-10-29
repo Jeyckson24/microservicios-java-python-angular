@@ -1,5 +1,5 @@
 from model.modeloAbstracto import ModeloAbstracto
 
-class AdministracionUsuarios ():
+class AdministracionMesa ():
     pass
     

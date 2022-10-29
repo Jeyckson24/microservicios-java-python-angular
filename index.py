@@ -4,40 +4,40 @@ from flask import request
 from flask import jsonify
 from waitress import serve
 import json
-from controllers.administracionUsuariosControler import AdministracionUsuarios
+from controllers.administracionMesasControler import AdministracionMesas
 mi_app = Flask (__name__)
 
-_controler_usuario = AdministracionUsuarios()
+_controler_usuario = AdministracionMesas()
 #get
 
-@mi_app.route('/usuarios',methods=['GET'])
-def mostrar_usuario():
-    datos_salida = _controler_usuario.mostrar_usuario()
+@mi_app.route('/mesas',methods=['GET'])
+def mostrar_mesas():
+    datos_salida = _controler_usuario.mostrar_mesas()
     
     return jsonify(datos_salida)
 #post
 
-@mi_app.route('/usuarios',methods=['POST'])
-def crear_usuario():
+@mi_app.route('/mesas',methods=['POST'])
+def crear_mesa():
     datos_entrada = request.get_json()
-    datos_salida = _controler_usuario.crear_usuario(datos_entrada)
+    datos_salida = _controler_usuario.crear_mesa(datos_entrada)
     
     return jsonify(datos_salida)
 #put
 
-@mi_app.route('/usuarios/<string:id>',methods=['PUT'])
-def actualizar_usuario(id):  
+@mi_app.route('/mesas/<string:id>',methods=['PUT'])
+def actualizar_mesa(id):  
     datos_entrada =request.get_json()
-    json = _controler_usuario.actualizar_usuario (id,datos_entrada)
+    json = _controler_usuario.actualizar_mesa (id,datos_entrada)
     
     return jsonify(json)
 
 
 #delete
 
-@mi_app.route('/usuarios/<string:id>',methods=['DELETE'])
-def eliminar_usuario(id):    
-    datos_salida = _controler_usuario.eliminar_usuario(id)
+@mi_app.route('/mesas/<string:id>',methods=['DELETE'])
+def eliminar_mesa(id):    
+    datos_salida = _controler_usuario.eliminar_mesa(id)
     
     return jsonify(datos_salida)
 
