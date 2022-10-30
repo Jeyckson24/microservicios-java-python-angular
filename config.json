@@ -1,7 +1,7 @@
 {
     "servidor":"127.0.0.1",
     "puerto": 9000,
-    "servidor-bd":"mongodb+srv://votingsystem:123456a*@votingsystem.zsoamye.mongodb.net/?retryWrites=true&w=majority",
-    "nombre-bd":"app_votingsystem"
+    "data-db-connection":"mongodb+srv://votingsystem:123456a*@votingsystem.zsoamye.mongodb.net/?retryWrites=true&w=majority",
+    "name-db":"app_votingsystem"
 
 }
