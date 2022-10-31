@@ -6,11 +6,13 @@ from waitress import serve
 import json
 from controllers.mesasControler import AdministracionMesas
 from controllers.partidosControler import AdministracionPartidos
+from controllers.resultadosControler import AdministracionResultados
 
 mi_app = Flask (__name__)
 
 _controler_usuario = AdministracionMesas()
 _controler_partidos = AdministracionPartidos()
+_controler_resultados = AdministracionResultados()
 #**********************administracion Mesas ***************************************
 
 #get
@@ -82,6 +84,42 @@ def eliminar_partido(id):
     
     return jsonify(datos_salida)
 
+#**********************Administracion Resultados ***************************************
+
+#get
+
+@mi_app.route('/resultados',methods=['GET'])
+def mostrar_resultados():
+    datos_salida = _controler_resultados.mostrar_resultados()
+
+    return jsonify(datos_salida)
+#post
+
+@mi_app.route('/resultados',methods=['POST'])
+def crear_resultados():
+    datos_entrada = request.get_json()
+    datos_salida = _controler_resultados.crear_resultados(datos_entrada)
+
+    return jsonify(datos_salida)
+#put
+
+@mi_app.route('/resultados/<string:id>',methods=['PUT'])
+def actualizar_resultados(id):  
+    datos_entrada =request.get_json()
+    json = _controler_resultados.actualizar_resultados (id,datos_entrada)
+
+    return jsonify(json)
+
+
+#delete
+
+@mi_app.route('/resultados/<string:id>',methods=['DELETE'])
+def eliminar_resultados(id):    
+    datos_salida = _controler_resultados.eliminar_resultados(id)
+
+    return jsonify(datos_salida)
+
+#**********************************************************
 
 def cargar_configuracion():
     with open ("config.json") as archivo:
