@@ -1,0 +1,47 @@
+package com.BackendSeguridad.ms_seguridad.Modelos;
+
+public class Usuario {
+
+    private String _id;
+    private String nombre_usuario;
+    private String correo;
+    private String contrasena;
+
+    public Usuario(String nombre_usuario, String correo, String contrasena) {
+        this.nombre_usuario = nombre_usuario;
+        this.correo = correo;
+        this.contrasena = contrasena;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getNombre_usuario() {
+        return nombre_usuario;
+    }
+
+    public void setNombre_usuario(String nombre_usuario) {
+        this.nombre_usuario = nombre_usuario;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+}
