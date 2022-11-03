@@ -12,7 +12,7 @@
 	<artifactId>ms_seguridad</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ms_seguridad</name>
-	<description>ms de Backend Seguridad</description>
+	<description>BackendSeguridad</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
