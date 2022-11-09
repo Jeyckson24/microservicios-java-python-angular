@@ -2,6 +2,7 @@ package com.BackendSeguridad.ms_seguridad.Modelos;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -13,11 +14,21 @@ public class Usuario {
     private String nombre_usuario;
     private String correo;
     private String contrasena;
+    @DBRef
+    private Rol rol;
 
     public Usuario(String nombre_usuario, String correo, String contrasena) {
         this.nombre_usuario = nombre_usuario;
         this.correo = correo;
         this.contrasena = contrasena;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public String get_id() {
