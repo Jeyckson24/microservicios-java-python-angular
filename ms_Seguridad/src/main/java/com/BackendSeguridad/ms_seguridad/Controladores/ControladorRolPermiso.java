@@ -48,7 +48,7 @@ public class ControladorRolPermiso {
 
         Rol rolConsulta = _repositorio_rol.findById(idRol).orElse(null);
         Permiso permisoConsulta = _repositorio_permiso.findById(idPermiso).orElse(null);
-        RolPermiso rolPermiso = new RolPermiso(rolConsulta, permisoConsulta);
+        RolPermiso rolPermiso = _repositorio_rol_permiso.findById(idRolPermiso).orElse(null);
         rolPermiso.setRol(rolConsulta);
         rolPermiso.setPermiso(permisoConsulta);
         _repositorio_rol_permiso.save(rolPermiso);
