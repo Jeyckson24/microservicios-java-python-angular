@@ -1,6 +1,8 @@
 package com.BackendSeguridad.ms_seguridad.Controladores;
 
+import com.BackendSeguridad.ms_seguridad.Modelos.Rol;
 import com.BackendSeguridad.ms_seguridad.Modelos.Usuario;
+import com.BackendSeguridad.ms_seguridad.Repositorios.RepositorioRol;
 import com.BackendSeguridad.ms_seguridad.Repositorios.RepositorioUsuario;
 import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class ControladorUsuario {
     @Autowired
     private RepositorioUsuario miRepositorio;
     @Autowired
-    //private RepositorioRol miRepoRol;
+    private RepositorioRol miRepoRol;
     @GetMapping("/listar")
     public List<Usuario> listar(){
         return miRepositorio.findAll();
@@ -42,15 +44,15 @@ public class ControladorUsuario {
         return "Usuario" + idUsuario + "actualizado";
     }
 
-    /*@PutMapping ("/{idUsuario}/rol/{idRol}")
-    public String actualizarUsuario(@PathVariable String idUsuario, @PathVariable String idRol){
+    @PutMapping ("/{idUsuario}/rol/{idRol}")
+    public String asignarRol(@PathVariable String idUsuario, @PathVariable String idRol){
+
         Usuario usuarioBusqueda = miRepositorio.findById(idUsuario).orElse(null);
-        usuarioBusqueda.setNombre_usuario(usuarioEntrada.getNombre_usuario());
-        usuarioBusqueda.setContrasena(convertirSHA256(usuarioEntrada.getContrasena()));
-        usuarioBusqueda.setCorreo(usuarioEntrada.getCorreo());
+        Rol rolConsulta = miRepoRol.findById(idRol).orElse(null);
+        usuarioBusqueda.setRol(rolConsulta);
         miRepositorio.save(usuarioBusqueda);
         return "Usuario" + idUsuario + "actualizado";
-    }*/
+    }
 
 
     public String convertirSHA256(String password){
