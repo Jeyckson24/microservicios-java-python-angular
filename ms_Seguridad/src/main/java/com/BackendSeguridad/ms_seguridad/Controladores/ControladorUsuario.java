@@ -70,4 +70,26 @@ public class ControladorUsuario {
         }
         return sb.toString();
     }
+
+    @PostMapping("/login")
+    public Usuario iniciarSesion (@RequestBody Usuario usuarioEntrada) {
+        String correo = usuarioEntrada.getCorreo();
+        Usuario usuarioConsulta= miRepositorio.findUserEmail(correo);
+
+        if (usuarioConsulta==null){
+            System.out.println("Usuario No existe");
+
+            return null;
+        } else {
+            if (usuarioConsulta.getContrasena().equals(convertirSHA256( usuarioEntrada.getContrasena()))){
+                usuarioConsulta.setContrasena(null);
+                return usuarioConsulta;
+            } else{
+                System.out.println("contraseña Incorrecta");
+                return null;
+            }
+
+        }
+
+    }
 }
