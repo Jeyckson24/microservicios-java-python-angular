@@ -30,11 +30,11 @@ def inicio_sesion():
 
     if respuesta.status_code == 200:
         usuario = respuesta.json()
-        tiempo_caduciodad_token = datetime.timedelta(60*60*24)
-        token_acceso = create_access_token(identity=usuario,expires_delta=tiempo_caduciodad_token)
-        return {"token_acceso":token_acceso}
+        tiempo_caducidad_token = datetime.timedelta(60*60*24)
+        token_acceso = create_access_token(identity=usuario, expires_delta=tiempo_caducidad_token)
+        return {"token_acceso": token_acceso}
     else:
-        return  jsonify({"mensaje":"Error usuario o contraseña"})
+        return jsonify({"mensaje": "Error usuario o contraseña"})
 @app.route('/')
 def home ():
     return 'api gateway'

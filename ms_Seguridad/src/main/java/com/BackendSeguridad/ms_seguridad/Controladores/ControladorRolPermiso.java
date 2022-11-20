@@ -10,6 +10,8 @@ import com.BackendSeguridad.ms_seguridad.Repositorios.RepositorioRolPermiso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/rolpermiso")
@@ -54,5 +56,18 @@ public class ControladorRolPermiso {
         _repositorio_rol_permiso.save(rolPermiso);
         return "se ha actualizado el permiso del perfil";
 
+    }
+    @PostMapping("{idRol}")
+    public RolPermiso obtenerPermiso(@PathVariable String idRol, @RequestBody Permiso permisoEntrada, HttpServletResponse respuesta) throws IOException {
+        Rol rolConsulta = _repositorio_rol.findById(idRol).orElse(null);
+        Permiso permisoConsulta = _repositorio_permiso.consultaPermiso(permisoEntrada.getUrl(), permisoEntrada.getMetodo());
+
+        if (rolConsulta != null  && permisoConsulta != null){
+            return _repositorio_rol_permiso.consultarRolPermiso(rolConsulta.get_id(), permisoConsulta.get_id());
+
+        }else {
+            respuesta.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return  null;
+        }
     }
 }

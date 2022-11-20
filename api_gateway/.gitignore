@@ -4,4 +4,4 @@ lib/
 Scripts/
 __pycache__/
 .idea/
-
+env/
