@@ -80,7 +80,7 @@ public class ControladorUsuario {
 
         if (usuarioConsulta==null){
             System.out.println("Usuario No existe");
-            codigoRespuestaHttp.setStatus(403);
+            codigoRespuestaHttp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 
             return null;
         } else {
