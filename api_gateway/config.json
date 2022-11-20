@@ -1,0 +1,8 @@
+{
+  "url-api-gateway": "127.0.0.1",
+  "puerto-api-gateway": 9006,
+  "url-ms-resultados": "http://localhost:9000",
+  "url-ms-seguridad": "http://localhost:9003"
+
+
+}
