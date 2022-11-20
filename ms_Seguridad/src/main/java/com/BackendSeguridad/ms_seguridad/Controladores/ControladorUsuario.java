@@ -8,6 +8,8 @@ import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -72,12 +74,13 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/login")
-    public Usuario iniciarSesion (@RequestBody Usuario usuarioEntrada) {
+    public Usuario iniciarSesion (@RequestBody Usuario usuarioEntrada, HttpServletResponse codigoRespuestaHttp) throws IOException {
         String correo = usuarioEntrada.getCorreo();
         Usuario usuarioConsulta= miRepositorio.findUserEmail(correo);
 
         if (usuarioConsulta==null){
             System.out.println("Usuario No existe");
+            codigoRespuestaHttp.setStatus(403);
 
             return null;
         } else {
@@ -86,6 +89,7 @@ public class ControladorUsuario {
                 return usuarioConsulta;
             } else{
                 System.out.println("contraseña Incorrecta");
+                codigoRespuestaHttp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 return null;
             }
 
