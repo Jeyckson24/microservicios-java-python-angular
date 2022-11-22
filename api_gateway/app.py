@@ -9,6 +9,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_jwt_extended import verify_jwt_in_request
 import requests
 import json
 
@@ -47,18 +48,22 @@ def verificar_peticion():
     excludedRoutes = ["/login"]
 
     if excludedRoutes.__contains__(request.path):
-        print ("no requiere permiso")
+
         pass
 
     elif verify_jwt_in_request():
         usuario = get_jwt_identity()
+
+
         if usuario ["rol"] is not None:
             tienePermiso = validarPermiso(endPoint, request.method, usuario["rol"]["_id"])
-            if not  tienePermiso:
-                return jsonify({"menssage":"Permiso Denegado"}),401
+            print(usuario["rol"]["_id"])
 
-            else:
-                return jsonify({"message":"Permiso Denegado"})
+            if not  tienePermiso:
+                return jsonify({"menssage":"Rol no tiene permiso"}),401
+
+        else:
+            return jsonify({"message":"No tiene Rol asignado - Permiso Denegado"}),401
 
 def limpiarURL(url):
     partes =url.split("/")
@@ -70,6 +75,7 @@ def limpiarURL(url):
 def validarPermiso(endPoint, metodo, idRol):
     configuracion = cargar_configuracion()
     url =configuracion["url-ms-seguridad"] + "/rolpermiso/" +str(idRol)
+    print(url)
     tienePermiso = False
     headers = {"Content-Type": "application/json; charset=utf-8"}
     body = {
@@ -80,7 +86,7 @@ def validarPermiso(endPoint, metodo, idRol):
     response = requests.post( url, json=body, headers=headers)
     try:
         data = response.json()
-        if ("_id"in data):
+        if ("_id" in data):
             tienePermiso = True
 
     except:
@@ -88,6 +94,25 @@ def validarPermiso(endPoint, metodo, idRol):
         pass
     return tienePermiso
 
+#############  PATHS DE CONSULTA ####################
+
+@app.route('/permisos/listar', methods=["GET"])
+def permisos_listar ():
+    print("Consulta candidatos")
+    return jsonify({"respuesta":"path permisos"})
+
+@app.route('/candidatos', methods=["GET"])
+def candidatos_listar ():
+    headers = {"Content_Type":"application/json; charset=utf8"}
+    configuracion = cargar_configuracion()
+
+    url =configuracion["url-ms-resultados"] + "/candidatos"
+    respuesta = requests.get(url,headers=headers)
+    print("Consulta candidatos")
+    return jsonify(respuesta.json())
+
+
+############# FIN PATHS DE CONSULTA ##################
 @app.route('/')
 def home ():
     return 'api gateway'
