@@ -1,4 +1,5 @@
 import datetime
+import re
 
 from flask import Flask
 from flask import request
@@ -35,6 +36,58 @@ def inicio_sesion():
         return {"token_acceso": token_acceso}
     else:
         return jsonify({"mensaje": "Error usuario o contraseña"})
+
+@app.before_request
+def verificar_peticion():
+    print("ejecucion de callback")
+    print("url->",request.url)
+    print("metodo->", request.method)
+
+    endPoint = limpiarURL(request.path)
+    excludedRoutes = ["/login"]
+
+    if excludedRoutes.__contains__(request.path):
+        print ("no requiere permiso")
+        pass
+
+    elif verify_jwt_in_request():
+        usuario = get_jwt_identity()
+        if usuario ["rol"] is not None:
+            tienePermiso = validarPermiso(endPoint, request.method, usuario["rol"]["_id"])
+            if not  tienePermiso:
+                return jsonify({"menssage":"Permiso Denegado"}),401
+
+            else:
+                return jsonify({"message":"Permiso Denegado"})
+
+def limpiarURL(url):
+    partes =url.split("/")
+    for laParte in partes:
+        if re.search('\\d', laParte):
+            url =url.replace(laParte,"?")
+    return url
+
+def validarPermiso(endPoint, metodo, idRol):
+    configuracion = cargar_configuracion()
+    url =configuracion["url-ms-seguridad"] + "/rolpermiso/" +str(idRol)
+    tienePermiso = False
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    body = {
+        "url": endPoint,
+        "metodo": metodo
+    }
+
+    response = requests.post( url, json=body, headers=headers)
+    try:
+        data = response.json()
+        if ("_id"in data):
+            tienePermiso = True
+
+    except:
+
+        pass
+    return tienePermiso
+
 @app.route('/')
 def home ():
     return 'api gateway'
