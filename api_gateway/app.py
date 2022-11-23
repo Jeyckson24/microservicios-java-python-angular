@@ -105,10 +105,17 @@ def permisos_listar ():
 def candidatos_listar ():
     headers = {"Content_Type":"application/json; charset=utf8"}
     configuracion = cargar_configuracion()
-
     url =configuracion["url-ms-resultados"] + "/candidatos"
     respuesta = requests.get(url,headers=headers)
-    print("Consulta candidatos")
+    return jsonify(respuesta.json())
+
+@app.route('/candidatos', methods=["POST"])
+def candidatos_crear ():
+    datosEntrada = request.get_json()
+    headers = {"Content_Type":"application/json; charset=utf8"}
+    configuracion = cargar_configuracion()
+    url =configuracion["url-ms-resultados"] + "/candidatos"
+    respuesta = requests.post(url,json=datosEntrada,headers=headers)
     return jsonify(respuesta.json())
 
 
