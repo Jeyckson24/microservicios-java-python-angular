@@ -12,10 +12,11 @@ from flask_jwt_extended import JWTManager
 from flask_jwt_extended import verify_jwt_in_request
 import requests
 import json
-
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS (app)
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "**secret**"  # Change this!
 jwt = JWTManager(app)
