@@ -102,14 +102,6 @@ def permisos_listar ():
     print("Consulta candidatos")
     return jsonify({"respuesta":"path permisos"})
 
-@app.route('/user/listar', methods=["GET"])
-def user_listar ():
-    headers = {"Content_Type":"application/json; charset=utf8"}
-    configuracion = cargar_configuracion()
-    url =configuracion["url-ms-seguridad"] + "/user/listar"
-    respuesta = requests.get(url,headers=headers)
-    return jsonify(respuesta.json())
-
 @app.route('/candidatos', methods=["GET"])
 def candidatos_listar ():
     headers = {"Content_Type":"application/json; charset=utf8"}
@@ -138,6 +130,26 @@ def candidatos_actualizar ():
 
 
 ############# FIN PATHS DE CONSULTA ##################
+
+############# INICIO PATH USUARIO ################
+@app.route('/user/crear', methods=["POST"])
+def user_crear ():
+    datosEntrada = request.get_json()
+    headers = {"Content_Type":"application/json; charset=utf8"}
+    configuracion = cargar_configuracion()
+    url =configuracion["url-ms-seguridad"] + "/user/crear"
+    respuesta = requests.post(url,json=datosEntrada,headers=headers)
+    return jsonify(respuesta.json())
+
+@app.route('/user/listar', methods=["GET"])
+def user_listar ():
+    headers = {"Content_Type":"application/json; charset=utf8"}
+    configuracion = cargar_configuracion()
+    url =configuracion["url-ms-seguridad"] + "/user/listar"
+    respuesta = requests.get(url,headers=headers)
+    return jsonify(respuesta.json())
+
+
 @app.route('/')
 def home ():
     return 'api gateway'
