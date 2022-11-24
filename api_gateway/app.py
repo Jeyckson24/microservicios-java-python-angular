@@ -141,6 +141,15 @@ def user_crear ():
     respuesta = requests.post(url,json=datosEntrada,headers=headers)
     return jsonify(respuesta.json())
 
+@app.route('/user/actualizar', methods=["PUT"])
+def user_actualizar ():
+    datosEntrada = request.get_json()
+    headers = {"Content_Type":"application/json; charset=utf8"}
+    configuracion = cargar_configuracion()
+    url =configuracion["url-ms-seguridad"] + "/user/actualizar"
+    respuesta = requests.get(url,json=datosEntrada,headers=headers)
+    return jsonify(respuesta.json())
+
 @app.route('/user/listar', methods=["GET"])
 def user_listar ():
     headers = {"Content_Type":"application/json; charset=utf8"}
