@@ -1,3 +1,4 @@
+# noinspection PyPackageRequirements
 import datetime
 import re
 
@@ -155,6 +156,14 @@ def user_listar ():
     headers = {"Content_Type":"application/json; charset=utf8"}
     configuracion = cargar_configuracion()
     url =configuracion["url-ms-seguridad"] + "/user/listar"
+    respuesta = requests.get(url,headers=headers)
+    return jsonify(respuesta.json())
+
+@app.route('/user/eliminar', methods=["DELETE"])
+def user_eliminar ():
+    headers = {"Content_Type":"application/json; charset=utf8"}
+    configuracion = cargar_configuracion()
+    url =configuracion["url-ms-seguridad"] + "/user/eliminar"
     respuesta = requests.get(url,headers=headers)
     return jsonify(respuesta.json())
 
