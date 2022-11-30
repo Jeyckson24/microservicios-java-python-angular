@@ -8,9 +8,13 @@ from controllers.mesasControler import AdministracionMesas
 from controllers.partidosControler import AdministracionPartidos
 from controllers.resultadosControler import AdministracionResultados
 from controllers.candidatosControler import AdministracionCandidatos
-
+from flask_cors import CORS
 
 mi_app = Flask (__name__)
+
+CORS (mi_app)
+
+#cors = CORS(mi_app, resources={r"/api/*":{"origin": "*"}})
 
 _controler_usuario = AdministracionMesas()
 _controler_partidos = AdministracionPartidos()
