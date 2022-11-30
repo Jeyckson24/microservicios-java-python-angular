@@ -1,0 +1,3 @@
+[submodule "Angular"]
+	path = Angular
+	url = https://github.com/Jeyckson24/vsangular.git
